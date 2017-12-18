@@ -6,8 +6,8 @@ pub fn str_to_u32_vec(s: &str) -> Vec<u32> {
         .collect::<Vec<u32>>()
 }
 
-pub fn get_rotated_vec(v: Vec<u32>, num_steps: u32) -> Vec<u32> {
-    let (a, b) = v.split_at(num_steps as usize);
+pub fn get_rotated_vec(v: Vec<u32>, num_steps: usize) -> Vec<u32> {
+    let (a, b) = v.split_at(num_steps);
     let mut spun_chars: Vec<u32> = vec![];
     spun_chars.extend_from_slice(b);
     spun_chars.extend_from_slice(a);
@@ -15,7 +15,7 @@ pub fn get_rotated_vec(v: Vec<u32>, num_steps: u32) -> Vec<u32> {
     spun_chars
 }
 
-pub fn inverse_captcha_rotate(sequence: Vec<u32>, num_steps: u32) -> u32 {
+pub fn inverse_captcha_rotate(sequence: Vec<u32>, num_steps: usize) -> u32 {
     // Creates a second vector and rotate it the given number of steps
     // Not very efficient, but it worked the first time around
     // It helped me get the hang of rust iterators
@@ -30,16 +30,19 @@ pub fn inverse_captcha_rotate(sequence: Vec<u32>, num_steps: u32) -> u32 {
                   if pair.0 == pair.1 { acc + pair.0 } else { acc })
 }
 
-pub fn inverse_captcha(sequence: Vec<u32>, num_steps: u32) -> u32 {
+pub fn inverse_captcha(sequence: Vec<u32>, num_steps: usize) -> u32 {
     // Use a modulus to determine the correct index to check against
-    // instead of creating a whole second vector
 
-    sequence.iter().enumerate()
+    let matched = (0..sequence.len())
+        .map(|i| (i + num_steps) % sequence.len())
+        .map(|i| sequence.get(i).unwrap());
+
+
+    sequence.iter().zip(matched)
         .fold(0,
               |acc, e|
-                  if e.1 == sequence.get((e.0 + num_steps as usize) % sequence.len())
-                      .unwrap() {
-                      acc + e.1
+                  if e.0 == e.1 {
+                      acc + e.0
                   } else {
                       acc
                   })
@@ -50,7 +53,7 @@ pub fn inverse_captcha_part_1(sequence: &str) -> u32 {
 }
 
 pub fn inverse_captcha_part_2(sequence: &str) -> u32 {
-    inverse_captcha(str_to_u32_vec(sequence), sequence.chars().count() as u32/2)
+    inverse_captcha(str_to_u32_vec(sequence), sequence.chars().count()/2)
 }
 
 #[cfg(test)]
