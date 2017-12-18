@@ -52,3 +52,5 @@ fabric.properties
 target/
 **/*.rs.bk
 Cargo.lock
+
+input.txt
