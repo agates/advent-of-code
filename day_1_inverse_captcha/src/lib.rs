@@ -58,7 +58,7 @@ pub fn inverse_captcha_part_2(sequence: &str) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use inverse_captcha::*;
+    use super::*;
 
     #[test]
     fn part_1_sequence_1() {

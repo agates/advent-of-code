@@ -20,7 +20,5 @@ mod lib;
 fn main() {
     use lib::*;
 
-    for line in lines_from_file("input.txt") {
-        println!("The answer is {}", inverse_captcha_part_2(&line))
-    }
+    println!("The answer is {}", calc_checksum_part_1(lines_from_file("input.txt")))
 }
