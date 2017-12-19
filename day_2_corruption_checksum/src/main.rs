@@ -20,5 +20,6 @@ mod lib;
 fn main() {
     use lib::*;
 
-    println!("The answer is {}", calc_checksum_part_1(lines_from_file("input.txt")))
+    println!("The answer for part 1 is {}", calc_checksum_part_1(lines_from_file("input.txt")));
+    println!("The answer for part 2 is {}", calc_checksum_part_2(lines_from_file("input.txt")))
 }

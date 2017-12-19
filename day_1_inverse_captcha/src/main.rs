@@ -21,6 +21,7 @@ fn main() {
     use lib::*;
 
     for line in lines_from_file("input.txt") {
-        println!("The answer is {}", inverse_captcha_part_2(&line))
+        println!("The answer for part 1 is {}", inverse_captcha_part_1(&line));
+        println!("The answer for part 2 is {}", inverse_captcha_part_2(&line))
     }
 }
